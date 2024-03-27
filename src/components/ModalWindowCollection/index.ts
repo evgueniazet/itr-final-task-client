@@ -1,0 +1,1 @@
+export { ModalWindowCollection } from './ModalWindowCollection';

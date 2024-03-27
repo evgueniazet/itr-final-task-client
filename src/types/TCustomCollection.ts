@@ -1,0 +1,1 @@
+export type TCustomCollection = { [key: string]: string };

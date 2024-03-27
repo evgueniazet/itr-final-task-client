@@ -1,0 +1,34 @@
+{
+    "UsersPage": {
+        "title": "Пользователи"
+    },
+    "UserPage": {
+        "title": "Страница пользователя",
+        "userInfoTitle": "Личная информация пользователя",
+        "collectionsTitle": "Коллекции пользователя",
+        "name": "Имя: ",
+        "surname": "Фамилия: ",
+        "id": "ID: ",
+        "email": "Почта: ",
+        "role": "Роль: ",
+        "createCollectionButton": "Создать новую коллекцию",
+        "noCollectionsMessage": "Пока не создано ни одной коллекции :("
+    },
+    "ModalWindowCollection": {
+        "saveCollectionButton": "Сохранить коллекцию",
+        "collectionTitle": "Название коллекции",
+        "collectionDescription": "Описание коллекции",
+        "collectionCategory": "Категория коллекции"
+    },
+    "customFieldEditor": {
+        "addCustomField": "Добавить кастомное поле",
+        "fieldTitle": "Название",
+        "dateTimeField": "Дата/Время",
+        "logicalField": "Логическое",
+        "numericField": "Числовое",
+        "stringField": "Строковое",
+        "textField": "Текстовое",
+        "addButton": "Добавить",
+        "customFieldsList": "Список кастомных полей: "
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "name": "client",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "lint:fix": "next lint --fix .",
+        "format": "prettier --write \"src/**/*.+(js|jsx|json|css|ts|tsx)\""
+    },
+    "dependencies": {
+        "@emotion/react": "^11.11.4",
+        "@emotion/styled": "^11.11.0",
+        "@mui/icons-material": "^5.15.12",
+        "@mui/material": "^5.15.11",
+        "axios": "^1.6.7",
+        "formik": "^2.4.5",
+        "next": "^14.1.0",
+        "next-intl": "^3.9.2",
+        "prettier": "^3.2.5",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-i18next": "^14.0.5",
+        "react-markdown": "^9.0.1",
+        "styled-components": "^6.1.8",
+        "yup": "^1.3.3"
+    },
+    "devDependencies": {
+        "@types/node": "^20.11.24",
+        "@types/react": "^18.2.61",
+        "@types/react-dom": "^18",
+        "typescript": "^5.3.3"
+    }
+}

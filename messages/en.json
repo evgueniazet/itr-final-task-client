@@ -1,0 +1,34 @@
+{
+    "UsersPage": {
+        "title": "Users"
+    },
+    "UserPage": {
+        "title": "User page",
+        "userInfoTitle": "User personal information",
+        "collectionsTitle": "User collections",
+        "name": "Name: ",
+        "surname": "Surname: ",
+        "id": "ID: ",
+        "email": "Email: ",
+        "role": "Role: ",
+        "createCollectionButton": "Create new collection",
+        "noCollectionsMessage": "No collections have been created yet :("
+    },
+    "ModalWindowCollection": {
+        "saveCollectionButton": "Save collection",
+        "collectionTitle": "Collection name",
+        "collectionDescription": "Collection description",
+        "collectionCategory": "Collection category"
+    },
+    "customFieldEditor": {
+        "addCustomField": "Add custom field",
+        "fieldTitle": "Title",
+        "dateTimeField": "Date/Time",
+        "logicalField": "Logical",
+        "numericField": "Numeric",
+        "stringField": "String",
+        "textField": "Text",
+        "addButton": "Add",
+        "customFieldsList": "List of custom fields:"
+    }
+}
