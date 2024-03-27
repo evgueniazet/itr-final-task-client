@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { api } from 'src/api/axiosSettings';
+import { requestApi } from 'src/api/requests';
 
 export const getCategories = () => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        axios
-            .get('http://localhost:3001/categories/all-categories')
+        api(requestApi.allCategories())
             .then((response) => {
                 setCategories(response.data);
             })

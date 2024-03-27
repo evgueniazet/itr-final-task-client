@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { TUser } from 'types/TUser';
 import { TCollection } from 'types/TCollection';
+import { api } from 'src/api/axiosSettings';
+import { requestApi } from 'src/api/requests';
 
 export const useUser = () => {
     const [user, setUser] = useState<TUser | undefined>();
@@ -9,8 +10,7 @@ export const useUser = () => {
 
     const useGetUserData = (userId: string) => {
         useEffect(() => {
-            axios
-                .get('http://localhost:3001/users/user', { params: { userId } })
+            api(requestApi.user({ userId }))
                 .then((response) => {
                     setUser(response.data);
                 })
@@ -24,10 +24,7 @@ export const useUser = () => {
 
     const useGetUserCollections = (userId: string) => {
         useEffect(() => {
-            axios
-                .get('http://localhost:3001/collections/all-collections', {
-                    params: { userId },
-                })
+            api(requestApi.allCollections({ userId }))
                 .then((response) => {
                     setCollections(response.data);
                 })
@@ -40,8 +37,7 @@ export const useUser = () => {
     };
 
     const deleteCollection = (collectionId: number) => {
-        axios
-            .post('http://localhost:3001/collections/delete-collection', { collectionId })
+        api(requestApi.deleteCollection({ collectionId }))
             .then(() => {
                 const updatedCollections = collections.filter(
                     (collection) => collection.id !== collectionId,
@@ -54,10 +50,11 @@ export const useUser = () => {
     };
 
     const createCollection = (collectionData: TCollection) => {
-        axios
-            .post('http://localhost:3001/collections/create-collection', {
+        api(
+            requestApi.createCollection({
                 ...collectionData,
-            })
+            }),
+        )
             .then(() => {
                 const updatedCollections = [...collections, collectionData];
                 setCollections(updatedCollections);
@@ -68,11 +65,7 @@ export const useUser = () => {
     };
 
     const updateCollection = (collectionId: number, updatedFields: Partial<TCollection>) => {
-        axios
-            .put(
-                `http://localhost:3001/collections/update-collection/?collectionId=${collectionId}`,
-                updatedFields,
-            )
+        api(requestApi.updateCollection(updatedFields, { collectionId }))
             .then(() => {
                 const updatedCollections = collections.map((collection) => {
                     if (collection.id === collectionId) {

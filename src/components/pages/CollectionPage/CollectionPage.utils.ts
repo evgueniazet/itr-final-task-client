@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { TItemInCollection } from 'types/TItemInCollection';
+import { api } from 'src/api/axiosSettings';
+import { requestApi } from 'src/api/requests';
 
 export const useItemsCollection = () => {
     const [items, setItems] = useState([]);
@@ -8,10 +9,7 @@ export const useItemsCollection = () => {
 
     const useGetItemsInCollection = (collectionId: string) => {
         useEffect(() => {
-            axios
-                .get('http://localhost:3001/items/all-items-in-collection', {
-                    params: { collectionId },
-                })
+            api(requestApi.allItemsInCollection({ collectionId }))
                 .then((response) => {
                     setItems(response.data);
                 })
@@ -24,8 +22,7 @@ export const useItemsCollection = () => {
     };
 
     const useCreateItemInCollection = (itemData: TItemInCollection) => {
-        axios
-            .post('http://localhost:3001/items/create-item', { ...itemData })
+        api(requestApi.createItem({ ...itemData }))
             .then((response) => {
                 const newItem = { ...itemData, id: response.data.id };
                 const updatedItems = [...items, newItem];
@@ -37,8 +34,7 @@ export const useItemsCollection = () => {
     };
 
     const useDeleteItemInCollection = (itemId: number) => {
-        axios
-            .post('http://localhost:3001/items/delete-item', { itemId })
+        api(requestApi.deleteItem({ itemId }))
             .then(() => {
                 const updatedItems = items.filter((item) => item.id !== itemId);
                 setItems(updatedItems);
@@ -52,8 +48,7 @@ export const useItemsCollection = () => {
         itemId: number,
         updatedFields: Partial<TItemInCollection>,
     ) => {
-        axios
-            .put(`http://localhost:3001/items/update-item/?itemId=${itemId}`, updatedFields)
+        api(requestApi.updateItem(updatedFields, { itemId }))
             .then(() => {
                 const updatedItems = items.map((item) => {
                     if (item.id === itemId) {
@@ -70,10 +65,7 @@ export const useItemsCollection = () => {
 
     const useGetCollection = (collectionId: string) => {
         useEffect(() => {
-            axios
-                .get(
-                    `http://localhost:3001/collections/get-collection-by-id/?collectionId=${collectionId}`,
-                )
+            api(requestApi.getCollectionById({ collectionId }))
                 .then((response) => {
                     setCollection(response.data);
                 })

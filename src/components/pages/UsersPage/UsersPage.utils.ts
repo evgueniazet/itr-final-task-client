@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { TUser } from 'types/TUser';
 import { ERoles } from 'enums/ERoles';
+import { api } from 'src/api/axiosSettings';
+import { requestApi } from 'src/api/requests';
 
 export const useUsers = () => {
     const [showLoader, setShowLoader] = useState(false);
@@ -10,8 +11,7 @@ export const useUsers = () => {
     useEffect(() => {
         setShowLoader(true);
 
-        axios
-            .get('http://localhost:3001/users/all-users')
+        api(requestApi.allUsers())
             .then((response) => {
                 setUsers(response.data);
             })
@@ -26,11 +26,12 @@ export const useUsers = () => {
     const handleUserBlock = (user: TUser, users: TUser[]) => {
         setShowLoader(true);
 
-        axios
-            .post('http://localhost:3001/users/update-user-block-status', {
+        api(
+            requestApi.updateUserBlockStatus({
                 userId: user.id,
                 isBlocked: !user.isBlocked,
-            })
+            }),
+        )
             .then(() => {
                 const updatedUsers = users.map((item: TUser) =>
                     item.id === user.id ? { ...item, isBlocked: !user.isBlocked } : item,
@@ -49,11 +50,12 @@ export const useUsers = () => {
     const handleChangeRole = (user: TUser, role: ERoles) => {
         setShowLoader(true);
 
-        axios
-            .post('http://localhost:3001/users/update-user-role', {
+        api(
+            requestApi.updateUserRole({
                 userId: user.id,
                 newRole: role,
-            })
+            }),
+        )
             .then(() => {
                 const newUser = users.map((item: TUser) =>
                     item.id === user.id ? { ...item, role } : item,
@@ -72,10 +74,11 @@ export const useUsers = () => {
     const handleUserDelete = (userIdToDelete: TUser) => {
         setShowLoader(true);
 
-        axios
-            .post('http://localhost:3001/users/delete-user', {
+        api(
+            requestApi.deleteUser({
                 userId: userIdToDelete.id,
-            })
+            }),
+        )
             .then(() => {
                 const updatedUsers = users.filter((user) => user.id !== userIdToDelete.id);
                 setUsers(updatedUsers);
@@ -92,8 +95,7 @@ export const useUsers = () => {
         setShowLoader(true);
 
         return new Promise((resolve) => {
-            axios
-                .get('http://localhost:3001/users/user', { params: { userId: id } })
+            api(requestApi.user({ userId: id }))
                 .then((response) => {
                     resolve(response.data);
                 })
