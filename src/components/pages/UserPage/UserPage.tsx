@@ -5,28 +5,30 @@ import { useTranslations } from 'next-intl';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { Container, Typography, Box, Button, IconButton } from '@mui/material';
 import { Delete, Edit, Add } from '@mui/icons-material';
-import { useUser } from './UserPage.utils';
+import { useGetUser, useCollections } from './UserPage.utils';
 import { ModalWindowCollection } from '../../ModalWindowCollection';
 import { Image } from 'components/Image';
 import { MarkdownEditor } from 'components/MarkdownEditor';
-import { getCategories } from 'utils/getCategories';
+import { useGetCategories } from 'hooks/useGetCategories';
 import { TCustomCollection } from 'types/TCustomCollection';
 import { TCollection } from 'types/TCollection';
 import { getLanguageFromUrl } from 'utils/getLanguageFromUrl';
 
 export const UserPage = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const t = useTranslations('UserPage');
+    const userId = searchParams.get('userId');
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editedCollection, setEditedCollection] = useState<TCollection | null>(null);
     const [existingCustomFieldsObj, setExistingCustomFields] = useState<TCustomCollection | {}>();
-    const searchParams = useSearchParams();
-    const userId = searchParams.get('userId');
-    const t = useTranslations('UserPage');
-    const { useGetUserData, useGetUserCollections, deleteCollection } = useUser();
-    const user = useGetUserData(userId);
-    const collections = useGetUserCollections(userId);
-    const router = useRouter();
-    const categories = getCategories();
-    const pathname = usePathname();
+
+    const user = useGetUser(userId);
+    const { collections, deleteCollection, createCollection, updateCollection } =
+        useCollections(userId);
+    const categories = useGetCategories();
 
     const existingCustomFields =
         collections.length > 0
@@ -48,18 +50,6 @@ export const UserPage = () => {
         setEditedCollection(editedCollection);
         setIsModalOpen(true);
         setExistingCustomFields(existingCustomFields[index]);
-    };
-
-    const handleDeleteCollection = (collectionId: number) => {
-        deleteCollection(collectionId);
-    };
-
-    const handleCreateCollection = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
     };
 
     const handleCollectionClick = (collectionId: number) => {
@@ -181,9 +171,9 @@ export const UserPage = () => {
                                                     <Edit />
                                                 </IconButton>
                                                 <IconButton
-                                                    onClick={() =>
-                                                        handleDeleteCollection(collection.id)
-                                                    }
+                                                    onClick={() => {
+                                                        deleteCollection(collection.id);
+                                                    }}
                                                     aria-label="delete"
                                                 >
                                                     <Delete />
@@ -198,7 +188,9 @@ export const UserPage = () => {
                                 <Button
                                     variant="contained"
                                     startIcon={<Add />}
-                                    onClick={handleCreateCollection}
+                                    onClick={() => {
+                                        setIsModalOpen(true);
+                                    }}
                                 >
                                     {t('createCollectionButton')}
                                 </Button>
@@ -210,10 +202,14 @@ export const UserPage = () => {
             <ModalWindowCollection
                 userId={userId}
                 isModalOpen={isModalOpen}
-                handleCloseModal={handleCloseModal}
+                handleCloseModal={() => {
+                    setIsModalOpen(false);
+                }}
                 categories={categories}
                 editedCollection={editedCollection}
                 existingCustomFields={existingCustomFieldsObj}
+                createCollection={createCollection}
+                updateCollection={updateCollection}
             />
         </Box>
     );

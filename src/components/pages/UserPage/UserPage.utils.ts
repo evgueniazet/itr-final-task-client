@@ -4,85 +4,111 @@ import { TCollection } from 'types/TCollection';
 import { api } from 'src/api/axiosSettings';
 import { requestApi } from 'src/api/requests';
 
-export const useUser = () => {
+export const useGetUser = (userId: string) => {
     const [user, setUser] = useState<TUser | undefined>();
+
+    const getUserData = async (userId: string) => {
+        try {
+            const response = await api(requestApi.user({ userId }));
+
+            if (response.data) {
+                setUser(response.data);
+            } else {
+                console.error('Error fetching data');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        getUserData(userId);
+    }, []);
+
+    return user;
+};
+
+export const useCollections = (userId: string) => {
     const [collections, setCollections] = useState([]);
 
-    const useGetUserData = (userId: string) => {
-        useEffect(() => {
-            api(requestApi.user({ userId }))
-                .then((response) => {
-                    setUser(response.data);
-                })
-                .catch((error) => {
-                    console.error('Error fetching data:', error);
-                });
-        }, [userId]);
+    const getCollectionsData = async (userId: string) => {
+        try {
+            const response = await api(requestApi.allCollections({ userId }));
 
-        return user;
+            if (response.data) {
+                setCollections(response.data);
+            } else {
+                console.error('Error fetching collections');
+            }
+        } catch (error) {
+            console.error('Error fetching collections:', error);
+        }
     };
 
-    const useGetUserCollections = (userId: string) => {
-        useEffect(() => {
-            api(requestApi.allCollections({ userId }))
-                .then((response) => {
-                    setCollections(response.data);
-                })
-                .catch((error) => {
-                    console.error('Error fetching collections:', error);
-                });
-        }, [userId]);
+    const deleteCollection = async (collectionId: number) => {
+        try {
+            const response = await api(requestApi.deleteCollection({ collectionId }));
 
-        return collections;
-    };
-
-    const deleteCollection = (collectionId: number) => {
-        api(requestApi.deleteCollection({ collectionId }))
-            .then(() => {
+            if (response.data) {
                 const updatedCollections = collections.filter(
                     (collection) => collection.id !== collectionId,
                 );
                 setCollections(updatedCollections);
-            })
-            .catch((error) => {
-                console.error('Error deleting collection:', error);
-            });
+            } else {
+                console.error('Error deleting collection');
+            }
+        } catch (error) {
+            console.error('Error deleting collection:', error);
+        }
     };
 
-    const createCollection = (collectionData: TCollection) => {
-        api(
-            requestApi.createCollection({
-                ...collectionData,
-            }),
-        )
-            .then(() => {
-                const updatedCollections = [...collections, collectionData];
+    const createCollection = async (collectionData: TCollection) => {
+        try {
+            const response = await api(
+                requestApi.createCollection({
+                    ...collectionData,
+                }),
+            );
+
+            if (response.data) {
+                const updatedCollections = [...collections, response.data];
                 setCollections(updatedCollections);
-            })
-            .catch((error) => {
-                console.error('Error creating collection', error);
-            });
+            } else {
+                console.error('Error creating collection');
+            }
+        } catch (error) {
+            console.error('Error creating collection', error);
+        }
     };
 
-    const updateCollection = (collectionId: number, updatedFields: Partial<TCollection>) => {
-        api(requestApi.updateCollection(updatedFields, { collectionId }))
-            .then(() => {
+    const updateCollection = async (collectionId: number, updatedFields: Partial<TCollection>) => {
+        try {
+            const response = await api(
+                requestApi.updateCollection(updatedFields, { collectionId }),
+            );
+
+            if (response.data) {
                 const updatedCollections = collections.map((collection) => {
                     if (collection.id === collectionId) {
-                        return { ...collection, ...updatedFields };
+                        return response.data;
                     }
                     return collection;
                 });
                 setCollections(updatedCollections);
-            })
-            .catch((error) => {
-                console.error('Error updating collection:', error);
-            });
+            } else {
+                console.error('Error updating collection');
+            }
+        } catch (error) {
+            console.error('Error updating collection:', error);
+        }
     };
 
+    useEffect(() => {
+        getCollectionsData(userId);
+    }, []);
+
     return {
-        useGetUserData,
-        useGetUserCollections,
+        collections,
         deleteCollection,
         createCollection,
         updateCollection,

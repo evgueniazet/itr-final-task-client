@@ -8,6 +8,8 @@ export type TModalWindowCollectionProps = {
     existingCustomFields: TCustomCollection | {};
     editedCollection: TCollection;
     handleCloseModal: () => void;
+    createCollection: (collectionData: TCollection) => void;
+    updateCollection: (collectionId: number, updatedFields: Partial<TCollection>) => void;
 };
 
 export type TCustomField = {

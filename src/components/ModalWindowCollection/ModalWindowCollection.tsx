@@ -17,9 +17,8 @@ import { useTranslations } from 'next-intl';
 import { CustomFieldEditor } from 'components/CustomFieldEditor';
 import { TCustomField, TModalWindowCollectionProps } from './ModalWindowCollection.types';
 import { createCollectionData } from './ModalWindowCollection.utils';
-import { useUser } from 'components/pages/UserPage/UserPage.utils';
 import { uploadImageToCloudinary } from 'utils/uploadImageToCloudinary';
-import { TCollection } from 'types/TCollection';
+import { TCollectionRequest } from 'types/TCollectionRequest';
 
 export const ModalWindowCollection = ({
     userId,
@@ -28,9 +27,10 @@ export const ModalWindowCollection = ({
     editedCollection,
     existingCustomFields,
     handleCloseModal,
+    createCollection,
+    updateCollection,
 }: TModalWindowCollectionProps) => {
-    const initialCollectionData: TCollection = {
-        id: 0,
+    const initialCollectionData: TCollectionRequest = {
         title: '',
         userId: userId,
         description: '',
@@ -39,10 +39,9 @@ export const ModalWindowCollection = ({
 
     const t = useTranslations('ModalWindowCollection');
     const theme = useTheme();
-    const [requiredFields, setRequiredFields] = useState<TCollection>(initialCollectionData);
+    const [requiredFields, setRequiredFields] = useState<TCollectionRequest>(initialCollectionData);
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const [customFields, setCustomFields] = useState<TCustomField[]>([]);
-    const { createCollection, updateCollection } = useUser();
     const [image, setImage] = useState<string>();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -103,7 +102,6 @@ export const ModalWindowCollection = ({
     useEffect(() => {
         if (editedCollection) {
             setRequiredFields({
-                id: editedCollection.id,
                 title: editedCollection.title,
                 userId: editedCollection.userId,
                 description: editedCollection.description,

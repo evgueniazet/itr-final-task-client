@@ -1,10 +1,10 @@
 import { TCustomField, TCategory } from './ModalWindowCollection.types';
-import { TCollection } from 'types/TCollection';
+import { TCollectionRequest } from 'types/TCollectionRequest';
 
 export const createCollectionData = (
     categories: TCategory[],
     customFields: TCustomField[],
-    requiredFields: TCollection,
+    requiredFields: TCollectionRequest,
     image: string,
 ) => {
     const category = categories.find((item) => item.title === requiredFields.category).title;
