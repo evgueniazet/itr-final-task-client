@@ -5,82 +5,102 @@ import { requestApi } from 'src/api/requests';
 
 export const useItemsCollection = () => {
     const [items, setItems] = useState([]);
-    const [collection, setCollection] = useState();
 
-    const useGetItemsInCollection = (collectionId: string) => {
-        useEffect(() => {
-            api(requestApi.allItemsInCollection({ collectionId }))
-                .then((response) => {
-                    setItems(response.data);
-                })
-                .catch((error) => {
-                    console.error('Error fetching items in collection:', error);
-                });
-        }, [collectionId]);
+    const getCollectionItems = async (collectionId: string) => {
+        try {
+            const response = await api(requestApi.allItemsInCollection({ collectionId }));
 
-        return items;
+            if (response.data) {
+                setItems(response.data);
+            } else {
+                console.error('Error fetching items in collection');
+            }
+        } catch (error) {
+            console.error('Error fetching items in collection:', error);
+        }
     };
 
-    const useCreateItemInCollection = (itemData: TItemInCollection) => {
-        api(requestApi.createItem({ ...itemData }))
-            .then((response) => {
-                const newItem = { ...itemData, id: response.data.id };
-                const updatedItems = [...items, newItem];
+    const createItemInCollection = async (itemData: TItemInCollection) => {
+        try {
+            const response = await api(requestApi.createItem(itemData));
+
+            if (response.data) {
+                const updatedItems = [...items, response.data];
                 setItems(updatedItems);
-            })
-            .catch((error) => {
-                console.error('Error creating item in collection', error);
-            });
+            } else {
+                console.error('Error creating item in collection');
+            }
+        } catch (error) {
+            console.error('Error creating item in collection', error);
+        }
     };
 
-    const useDeleteItemInCollection = (itemId: number) => {
-        api(requestApi.deleteItem({ itemId }))
-            .then(() => {
+    const deleteItemInCollection = async (itemId: number) => {
+        try {
+            const response = await api(requestApi.deleteItem({ itemId }));
+
+            if (response.data) {
                 const updatedItems = items.filter((item) => item.id !== itemId);
                 setItems(updatedItems);
-            })
-            .catch((error) => {
-                console.error('Error deleting item in collection', error);
-            });
+            } else {
+                console.error('Error deleting item in collection');
+            }
+        } catch (error) {
+            console.error('Error deleting item in collection', error);
+        }
     };
 
-    const useUpdateItemInCollection = (
+    const updateItemInCollection = async (
         itemId: number,
         updatedFields: Partial<TItemInCollection>,
     ) => {
-        api(requestApi.updateItem(updatedFields, { itemId }))
-            .then(() => {
+        try {
+            const response = await api(requestApi.updateItem(updatedFields, { itemId }));
+
+            if (response.data) {
                 const updatedItems = items.map((item) => {
                     if (item.id === itemId) {
-                        return { ...item, ...updatedFields };
+                        return response.data;
                     }
                     return item;
                 });
                 setItems(updatedItems);
-            })
-            .catch((error) => {
-                console.error('Error editing item in collection', error);
-            });
-    };
-
-    const useGetCollection = (collectionId: string) => {
-        useEffect(() => {
-            api(requestApi.getCollectionById({ collectionId }))
-                .then((response) => {
-                    setCollection(response.data);
-                })
-                .catch((error) => {
-                    console.error('Error fetching items in collection:', error);
-                });
-        }, []);
-        return collection;
+            } else {
+                console.error('Error editing item in collection');
+            }
+        } catch (error) {
+            console.error('Error editing item in collection', error);
+        }
     };
 
     return {
-        useGetItemsInCollection,
-        useCreateItemInCollection,
-        useDeleteItemInCollection,
-        useUpdateItemInCollection,
-        useGetCollection,
+        items,
+        getCollectionItems,
+        createItemInCollection,
+        deleteItemInCollection,
+        updateItemInCollection,
     };
+};
+
+export const useCollection = (collectionId: string) => {
+    const [collection, setCollection] = useState();
+
+    const getCollection = async (collectionId: string) => {
+        try {
+            const response = await api(requestApi.getCollectionById({ collectionId }));
+            if (response.data) {
+                setCollection(response.data);
+            } else {
+                console.error('Error fetching items in collection');
+            }
+        } catch (error) {
+            console.error('Error fetching items in collection:', error);
+        }
+    };
+
+    useEffect(() => {
+        getCollection(collectionId);
+    }, []);
+
+    return collection;
 };

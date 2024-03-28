@@ -7,31 +7,20 @@ import { Add, Save } from '@mui/icons-material';
 import { useItemsCollection } from './CollectionPage.utils';
 import { ItemsList } from 'components/ItemsList/ItemsList';
 import { TItemInCollection } from 'types/TItemInCollection';
+import { useCollection } from './CollectionPage.utils';
 
 export const CollectionPage = () => {
     const searchParams = useSearchParams();
     const collectionId = searchParams.get('collectionId');
-    const {
-        useGetItemsInCollection,
-        useCreateItemInCollection,
-        useDeleteItemInCollection,
-        useGetCollection,
-    } = useItemsCollection();
-    const items = useGetItemsInCollection(collectionId);
+
     const [newItemTitle, setNewItemTitle] = useState('');
     const [newItemTags, setNewItemTags] = useState([]);
     const [isCreatingNewItem, setIsCreatingNewItem] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
 
-    const collectionData = useGetCollection(collectionId);
-
-    const handleDelete = (itemId: number) => {
-        useDeleteItemInCollection(itemId);
-    };
-
-    const handleCreateItem = () => {
-        setIsCreatingNewItem(true);
-    };
+    const collectionData = useCollection(collectionId);
+    const { items, createItemInCollection, deleteItemInCollection, updateItemInCollection } =
+        useItemsCollection();
 
     const handleSaveNewItem = async () => {
         const itemData: TItemInCollection = {
@@ -41,7 +30,7 @@ export const CollectionPage = () => {
             id: 0,
         };
 
-        await useCreateItemInCollection(itemData);
+        await createItemInCollection(itemData);
         setNewItemTitle('');
         setNewItemTags([]);
         setIsCreatingNewItem(false);
@@ -50,7 +39,12 @@ export const CollectionPage = () => {
     return (
         <>
             <h1>Collection Page</h1>
-            <ItemsList items={items} onDelete={handleDelete} collection={collectionData} />
+            <ItemsList
+                items={items}
+                onDelete={(itemId: number) => deleteItemInCollection(itemId)}
+                updateItemInCollection={updateItemInCollection}
+                collection={collectionData}
+            />
             {isCreatingNewItem || selectedItem ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                     <TextField
@@ -89,7 +83,11 @@ export const CollectionPage = () => {
                 </Box>
             ) : (
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-                    <Button variant="contained" startIcon={<Add />} onClick={handleCreateItem}>
+                    <Button
+                        variant="contained"
+                        startIcon={<Add />}
+                        onClick={() => setIsCreatingNewItem(true)}
+                    >
                         Create item
                     </Button>
                 </Box>

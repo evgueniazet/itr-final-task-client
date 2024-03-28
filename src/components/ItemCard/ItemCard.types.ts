@@ -3,6 +3,7 @@ import { TCollection } from 'types/TCollection';
 
 export type TItemCardProps = {
     item: TItemInCollection;
-    onDelete: (id: number) => void;
     collection: TCollection;
+    onDelete: (id: number) => void;
+    updateItemInCollection: (itemId: number, updatedFields: Partial<TItemInCollection>) => void;
 };

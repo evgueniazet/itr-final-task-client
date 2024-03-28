@@ -1,9 +1,10 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
-import { useItemsCollection } from '../CollectionPage.utils';
+import { TCustomFieldsProps } from './CustomFields.type';
+import { TItemInCollection } from 'types/TItemInCollection';
+import { TCollection } from 'types/TCollection';
 
-export const CustomFields = ({ collection, item }: any) => {
+export const CustomFields = ({ collection, item, updateItemInCollection }: TCustomFieldsProps) => {
     const [editedFields, setEditedFields] = useState<{ [key: string]: any }>({});
-    const { useUpdateItemInCollection } = useItemsCollection();
 
     useEffect(() => {
         setEditedFields({});
@@ -21,11 +22,14 @@ export const CustomFields = ({ collection, item }: any) => {
     };
 
     const handleSave = () => {
-        useUpdateItemInCollection(item.id, editedFields);
+        updateItemInCollection(item.id, editedFields);
     };
 
     const renderField = (fieldName: string, key: string, fieldType: string) => {
-        let inputValue = editedFields[key] !== undefined ? editedFields[key] : item[key];
+        let inputValue =
+            editedFields[key] !== undefined
+                ? editedFields[key]
+                : item[key as keyof TItemInCollection];
 
         if (inputValue === null) {
             inputValue = '';
@@ -70,12 +74,14 @@ export const CustomFields = ({ collection, item }: any) => {
         const fields: JSX.Element[] = [];
 
         for (const key in collection) {
-            if (key.startsWith('custom') && collection[key] !== null) {
+            if (key.startsWith('custom') && collection[key as keyof TCollection] !== null) {
                 const [, type] = key.split('_');
                 const fixedType = type.slice(0, -1);
-                const fieldName = collection[key];
+                const fieldName = collection[key as keyof TCollection];
 
-                fields.push(renderField(fieldName, key, fixedType));
+                if (typeof fieldName === 'string') {
+                    fields.push(renderField(fieldName, key, fixedType));
+                }
             }
         }
 

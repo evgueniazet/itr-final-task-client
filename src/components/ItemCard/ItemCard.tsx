@@ -1,10 +1,15 @@
 import React from 'react';
 import { Card, CardContent, Typography, IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Delete } from '@mui/icons-material';
 import { TItemCardProps } from './ItemCard.types';
 import { CustomFields } from 'components/pages/CollectionPage/components';
 
-export const ItemCard = ({ item, onDelete, collection }: TItemCardProps) => {
+export const ItemCard = ({
+    item,
+    collection,
+    onDelete,
+    updateItemInCollection,
+}: TItemCardProps) => {
     return (
         <Card>
             <CardContent>
@@ -23,10 +28,14 @@ export const ItemCard = ({ item, onDelete, collection }: TItemCardProps) => {
                         No tags
                     </Typography>
                 )}
-                <CustomFields item={item} collection={collection} />
+                <CustomFields
+                    updateItemInCollection={updateItemInCollection}
+                    item={item}
+                    collection={collection}
+                />
             </CardContent>
             <IconButton aria-label="delete" onClick={() => onDelete(item.id)}>
-                <DeleteIcon />
+                <Delete />
             </IconButton>
         </Card>
     );

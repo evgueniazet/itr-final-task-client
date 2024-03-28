@@ -53,7 +53,7 @@ export const requestApi = {
     }),
     updateItem: (data: any, params: any) => ({
         method: ERequestMethodType.PUT,
-        url: '/items/delete-item',
+        url: '/items/update-item',
         data,
         params
     }),
