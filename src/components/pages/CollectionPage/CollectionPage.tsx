@@ -15,7 +15,6 @@ export const CollectionPage = () => {
         useGetItemsInCollection,
         useCreateItemInCollection,
         useDeleteItemInCollection,
-        useUpdateItemInCollection,
         useGetCollection,
     } = useItemsCollection();
     const items = useGetItemsInCollection(collectionId);
@@ -25,10 +24,6 @@ export const CollectionPage = () => {
     const [selectedItem, setSelectedItem] = useState(null);
 
     const collectionData = useGetCollection(collectionId);
-
-    const handleEdit = (item: TItemInCollection) => {
-        setSelectedItem(item);
-    };
 
     const handleDelete = (itemId: number) => {
         useDeleteItemInCollection(itemId);
@@ -52,20 +47,10 @@ export const CollectionPage = () => {
         setIsCreatingNewItem(false);
     };
 
-    const handleUpdateItem = async () => {
-        await useUpdateItemInCollection(selectedItem.id, selectedItem);
-        setSelectedItem(null);
-    };
-
     return (
         <>
             <h1>Collection Page</h1>
-            <ItemsList
-                items={items}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                collection={collectionData}
-            />
+            <ItemsList items={items} onDelete={handleDelete} collection={collectionData} />
             {isCreatingNewItem || selectedItem ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                     <TextField
@@ -93,25 +78,14 @@ export const CollectionPage = () => {
                         }}
                         sx={{ mr: 1 }}
                     />
-                    {selectedItem ? (
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            startIcon={<Save />}
-                            onClick={handleUpdateItem}
-                        >
-                            Update
-                        </Button>
-                    ) : (
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            startIcon={<Save />}
-                            onClick={handleSaveNewItem}
-                        >
-                            Save
-                        </Button>
-                    )}
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={<Save />}
+                        onClick={handleSaveNewItem}
+                    >
+                        Save
+                    </Button>
                 </Box>
             ) : (
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
