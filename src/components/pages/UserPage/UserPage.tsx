@@ -94,7 +94,8 @@ export const UserPage = () => {
                         </Typography>
                         <Container sx={{ mt: 3 }}>
                             <Typography variant="subtitle1">
-                                {t('name')} {user.name}
+                                {t('name')}
+                                {user.name}
                             </Typography>
                             <Typography variant="subtitle1">
                                 {t('surname')} {user.surname}
@@ -139,29 +140,50 @@ export const UserPage = () => {
                                                 mt: 3,
                                                 display: 'flex',
                                                 justifyContent: 'space-between',
+                                                width: '100%',
                                             }}
                                         >
-                                            <Container>
+                                            <Box sx={{ width: '100%' }}>
                                                 <Typography
-                                                    onClick={() => {
-                                                        handleCollectionClick(collection.id);
-                                                    }}
                                                     variant="subtitle1"
+                                                    onClick={() =>
+                                                        handleCollectionClick(collection.id)
+                                                    }
                                                 >
-                                                    {t('collectionName')} {collection.title}
+                                                    {t('collectionName')}&nbsp;
+                                                    <Typography
+                                                        variant="subtitle1"
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                            display: 'inline',
+                                                           textDecoration:'underline'
+                                                        }}
+                                                    >
+                                                        {collection.title}
+                                                    </Typography>
                                                 </Typography>
                                                 <Typography variant="subtitle1">
                                                     {t('collectionCategory')}
                                                     {collection.category}
                                                 </Typography>
-                                                {t('collectionDescription')}
-                                                <MarkdownEditor
-                                                    markdownText={collection.description}
-                                                ></MarkdownEditor>
-                                            </Container>
+                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                    <Typography variant="subtitle1" sx={{ mr: 1 }}>
+                                                        {t('collectionDescription')}
+                                                    </Typography>
+                                                    <MarkdownEditor
+                                                        markdownText={collection.description}
+                                                    ></MarkdownEditor>
+                                                </Box>
 
-                                            <Image imageUrl={collection.image}></Image>
-                                            <Box>
+                                                <Image imageUrl={collection.image}></Image>
+                                            </Box>
+                                            <Box
+                                                sx={{
+                                                    width: '100%',
+                                                    display: 'flex',
+                                                    justifyContent: 'flex-end',
+                                                }}
+                                            >
                                                 <IconButton
                                                     onClick={() =>
                                                         handleEditCollection(collection.id, i)

@@ -58,8 +58,7 @@
         "numericField": "Числовое",
         "stringField": "Строковое",
         "textField": "Текстовое",
-        "addButton": "Добавить",
-        "customFieldsList": "Список кастомных полей: "
+        "addButton": "Добавить"
     },
     "CollectionPage": {
         "title": "Коллекция",
@@ -67,6 +66,8 @@
         "noTags": "Тэги не были добавлены",
         "noItems": "Элементы коллекции не были добавлены",
         "saveBtn": "Сохранить",
-        "createItem": "Создать"
+        "createItem": "Создать",
+        "createTitle": "Название",
+        "createTags": "Тэги"
     }
 }

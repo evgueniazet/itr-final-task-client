@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import { TCustomFieldsProps } from './CustomFields.type';
 import { TItemInCollection } from 'types/TItemInCollection';
 import { TCollection } from 'types/TCollection';
+import { Checkbox, TextField, Typography, Button, Box } from '@mui/material';
 
 export const CustomFields = ({ collection, item, updateItemInCollection }: TCustomFieldsProps) => {
     const [editedFields, setEditedFields] = useState<{ [key: string]: any }>({});
@@ -35,39 +36,45 @@ export const CustomFields = ({ collection, item, updateItemInCollection }: TCust
             inputValue = '';
         }
 
-        if (fieldType === 'boolean') {
-            return (
-                <div key={fieldName}>
-                    <label>
-                        <input
-                            name={key}
-                            onChange={handleChange}
-                            type="checkbox"
-                            checked={inputValue as boolean}
-                        />{' '}
-                        {fieldName}
-                    </label>
-                </div>
-            );
-        } else if (fieldType === 'date') {
-            const formattedDate = inputValue
-                ? new Date(inputValue).toISOString().substr(0, 10)
-                : '';
-
-            return (
-                <div key={fieldName}>
-                    <label>{fieldName}:</label>
-                    <input name={key} onChange={handleChange} type="date" value={formattedDate} />
-                </div>
-            );
-        } else {
-            return (
-                <div key={fieldName}>
-                    <label>{fieldName}:</label>
-                    <input name={key} onChange={handleChange} type="text" value={inputValue} />
-                </div>
-            );
-        }
+        return (
+            <div
+                key={fieldName}
+                style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: '8px',
+                }}
+            >
+                <Typography>{fieldName}:</Typography>
+                {fieldType === 'boolean' ? (
+                    <Checkbox
+                        name={key}
+                        onChange={handleChange}
+                        checked={Boolean(inputValue)}
+                        sx={{ marginLeft: '8px' }}
+                    />
+                ) : fieldType === 'date' ? (
+                    <TextField
+                        name={key}
+                        onChange={handleChange}
+                        type="date"
+                        value={inputValue ? new Date(inputValue).toISOString().substr(0, 10) : ''}
+                        fullWidth
+                        sx={{ marginLeft: '8px' }}
+                    />
+                ) : (
+                    <TextField
+                        name={key}
+                        onChange={handleChange}
+                        type="text"
+                        value={inputValue}
+                        fullWidth
+                        sx={{ marginLeft: '8px' }}
+                    />
+                )}
+            </div>
+        );
     };
 
     const renderFields = () => {
@@ -89,9 +96,13 @@ export const CustomFields = ({ collection, item, updateItemInCollection }: TCust
     };
 
     return (
-        <div>
+        <Box>
             {renderFields()}
-            <button onClick={handleSave}>Save</button>
-        </div>
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+                <Button onClick={handleSave} variant="contained">
+                    Save
+                </Button>
+            </Box>
+        </Box>
     );
 };

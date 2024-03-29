@@ -33,7 +33,7 @@ export const Image = ({ imageUrl }: { imageUrl: string }) => {
 
     return (
         <Box>
-            {imageSrc ? <img style={{ width: '100px' }} src={imageSrc} alt="Uploaded" /> : <p>-</p>}
+            {imageSrc ? <img style={{ width: '100px' }} src={imageSrc} alt="Uploaded" /> : <p></p>}
         </Box>
     );
 };

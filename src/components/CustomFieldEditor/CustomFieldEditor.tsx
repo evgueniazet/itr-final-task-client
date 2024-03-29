@@ -35,7 +35,7 @@ export const CustomFieldEditor = ({
     useEffect(() => {
         if (existingCustomFields) {
             const existingCustomFieldsArray = Object.entries(existingCustomFields).map(
-                ([key, value]) => ({ title: getCustomFieldType(key), value }),
+                ([key, value]) => ({ id: key, title: getCustomFieldType(key), value }),
             );
             setExistingCustomFieldsData(existingCustomFieldsArray);
         }
@@ -68,6 +68,7 @@ export const CustomFieldEditor = ({
 
     const handleRemoveField = (id: number) => {
         setCustomFields(customFields.filter((field) => field.id !== id));
+        setExistingCustomFieldsData(existingCustomFieldsData.filter((field) => field.id !== id));
     };
 
     const countFieldsOfType = (type: string) => {
@@ -124,39 +125,48 @@ export const CustomFieldEditor = ({
             </Box>
             <Box>
                 {existingCustomFieldsData.length > 0 &&
-                    existingCustomFieldsData.map(({ title, value }) => {
+                    existingCustomFieldsData.map(({ id, title, value }) => {
                         return (
-                            <Typography key={title}>
-                                {title}: {value}
-                            </Typography>
+                            <Box
+                                key={id}
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <Typography sx={{ flex: 1 }}>
+                                    {title}: {value}
+                                </Typography>
+                                <IconButton onClick={() => handleRemoveField(id)}>
+                                    <Close />
+                                </IconButton>
+                            </Box>
                         );
                     })}
             </Box>
-            {customFields.length > 0 && (
-                <Box>
-                    <Typography sx={{ mt: 1 }} variant="h6">
-                        {t('customFieldsList')}
-                    </Typography>
-                    {customFields.map((field) => (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                width: '10vw',
-                                mt: 1,
-                            }}
-                            key={field.id}
-                        >
-                            <Typography>
-                                {capitalizeFirstLetter(field.type)}: {field.name}
-                            </Typography>
-                            <IconButton sx={{ p: 0 }} onClick={() => handleRemoveField(field.id)}>
-                                <Close />
-                            </IconButton>
-                        </Box>
-                    ))}
-                </Box>
-            )}
+            <Box>
+                {customFields.length > 0 &&
+                    customFields.map((field) => {
+                        return (
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                }}
+                                key={field.id}
+                            >
+                                <Typography>
+                                    {capitalizeFirstLetter(field.type)}: {field.name}
+                                </Typography>
+                                <IconButton onClick={() => handleRemoveField(field.id)}>
+                                    <Close />
+                                </IconButton>
+                            </Box>
+                        );
+                    })}
+            </Box>
         </div>
     );
 };

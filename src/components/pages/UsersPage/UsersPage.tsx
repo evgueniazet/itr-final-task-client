@@ -33,7 +33,7 @@ export const UsersPage = () => {
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
                 <Typography
-                    variant="h6"
+                    variant="h5"
                     sx={{
                         flex: 1,
                         color: theme.palette.text.primary,

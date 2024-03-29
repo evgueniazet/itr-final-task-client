@@ -22,9 +22,6 @@ export const UserRow = ({
                     flex: 1,
                     color: theme.palette.text.primary,
                     cursor: 'pointer',
-                    '&:hover': {
-                        color: theme.palette.primary.main,
-                    },
                 }}
                 onClick={() => onClickUser(user.id)}
             >

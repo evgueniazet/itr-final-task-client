@@ -58,8 +58,7 @@
         "numericField": "Numeric",
         "stringField": "String",
         "textField": "Text",
-        "addButton": "Add",
-        "customFieldsList": "List of custom fields:"
+        "addButton": "Add"
     },
     "CollectionPage": {
         "title": "Collection",
@@ -67,6 +66,8 @@
         "noTags": "No tags have been added",
         "noItems": "No items have been added",
         "saveBtn": "Save",
-        "createItem": "Create"
+        "createItem": "Create",
+        "createTitle": "Title",
+        "createTags": "Tags"
     }
 }

@@ -3,7 +3,7 @@ import { TItemInCollection } from 'types/TItemInCollection';
 import { api } from 'src/api/axiosSettings';
 import { requestApi } from 'src/api/requests';
 
-export const useItemsCollection = () => {
+export const useItemsCollection = (collectionId: string) => {
     const [items, setItems] = useState([]);
 
     const getCollectionItems = async (collectionId: string) => {
@@ -26,6 +26,7 @@ export const useItemsCollection = () => {
 
             if (response.data) {
                 const updatedItems = [...items, response.data];
+
                 setItems(updatedItems);
             } else {
                 console.error('Error creating item in collection');
@@ -73,6 +74,10 @@ export const useItemsCollection = () => {
         }
     };
 
+    useEffect(() => {
+        getCollectionItems(collectionId);
+    }, [collectionId]);
+
     return {
         items,
         getCollectionItems,
@@ -100,7 +105,7 @@ export const useCollection = (collectionId: string) => {
 
     useEffect(() => {
         getCollection(collectionId);
-    }, []);
+    }, [collectionId]);
 
     return collection;
 };

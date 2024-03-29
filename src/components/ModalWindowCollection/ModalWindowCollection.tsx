@@ -124,7 +124,7 @@ export const ModalWindowCollection = ({
                     transform: 'translate(-50%, -50%)',
                     bgcolor: theme.palette.background.default,
                     boxShadow: 24,
-                    p: 4,
+                    p: 6,
                     height: '60vh',
                     overflowY: 'auto',
                 }}
@@ -179,7 +179,7 @@ export const ModalWindowCollection = ({
                     setCustomFields={setCustomFields}
                 />
                 <Box sx={{ mt: 2 }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
                         <Button
                             variant="contained"
                             onClick={handleSaveCollection}

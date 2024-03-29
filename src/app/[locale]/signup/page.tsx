@@ -39,7 +39,6 @@ const SignUp = () => {
                 })
                 .catch((err) => {
                     console.error('ERROR', err);
-                    //TODO: user friendly error message
                 });
         },
     });
@@ -51,6 +50,9 @@ const SignUp = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '100vh',
+                backgroundColor: themeMode
+                    ? theme.palette.primary.contrastText
+                    : theme.palette.secondary.contrastText,
             }}
         >
             <Box sx={{ width: '400px' }}>

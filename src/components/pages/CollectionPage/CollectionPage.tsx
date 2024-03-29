@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { Add, Save } from '@mui/icons-material';
 import { useItemsCollection } from './CollectionPage.utils';
@@ -22,7 +22,7 @@ export const CollectionPage = () => {
 
     const collectionData = useCollection(collectionId);
     const { items, createItemInCollection, deleteItemInCollection, updateItemInCollection } =
-        useItemsCollection();
+        useItemsCollection(collectionId);
 
     const handleSaveNewItem = async () => {
         const itemData: TItemInCollection = {
@@ -39,8 +39,14 @@ export const CollectionPage = () => {
     };
 
     return (
-        <>
-            <h1> {t('title')}</h1>
+        <Box sx={{ p: 6 }}>
+            <Typography
+                sx={{ display: 'flex', justifyContent: 'center' }}
+                variant="h4"
+                component="h4"
+            >
+                {t('title')}
+            </Typography>
             <ItemsList
                 items={items}
                 onDelete={(itemId: number) => deleteItemInCollection(itemId)}
@@ -50,7 +56,7 @@ export const CollectionPage = () => {
             {isCreatingNewItem || selectedItem ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                     <TextField
-                        label="Title"
+                        label={t('createTitle')}
                         value={selectedItem ? selectedItem.title : newItemTitle}
                         onChange={(e) => {
                             if (selectedItem) {
@@ -62,7 +68,7 @@ export const CollectionPage = () => {
                         sx={{ mr: 1 }}
                     />
                     <TextField
-                        label="Tags"
+                        label={t('createTags')}
                         value={(selectedItem ? selectedItem.tags : newItemTags).join(', ')}
                         onChange={(e) => {
                             const tags = e.target.value.split(',').map((tag) => tag.trim());
@@ -94,6 +100,6 @@ export const CollectionPage = () => {
                     </Button>
                 </Box>
             )}
-        </>
+        </Box>
     );
 };
