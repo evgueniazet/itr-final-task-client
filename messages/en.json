@@ -1,6 +1,33 @@
 {
+    "Header": {
+        "logout": "Logout",
+        "login": "Login",
+        "register": "Sign Up",
+        "users": "Users"
+    },
+    "LoginPage": {
+        "login": "Login",
+        "email": "Email",
+        "password": "Password"
+    },
+    "RegisterPage": {
+        "register": "Sign Up",
+        "name": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm Password"
+    },
     "UsersPage": {
-        "title": "Users"
+        "title": "Users",
+        "admin": "Admin",
+        "user": "User",
+        "id": "ID",
+        "name": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "role": "Role",
+        "blockStatus": "Status"
     },
     "UserPage": {
         "title": "User page",
@@ -12,7 +39,10 @@
         "email": "Email: ",
         "role": "Role: ",
         "createCollectionButton": "Create new collection",
-        "noCollectionsMessage": "No collections have been created yet :("
+        "noCollectionsMessage": "No collections have been created yet :(",
+        "collectionName": "Collection name: ",
+        "collectionCategory": "Collection category: ",
+        "collectionDescription": "Collection description: "
     },
     "ModalWindowCollection": {
         "saveCollectionButton": "Save collection",
@@ -20,7 +50,7 @@
         "collectionDescription": "Collection description",
         "collectionCategory": "Collection category"
     },
-    "customFieldEditor": {
+    "CustomFieldEditor": {
         "addCustomField": "Add custom field",
         "fieldTitle": "Title",
         "dateTimeField": "Date/Time",
@@ -30,5 +60,13 @@
         "textField": "Text",
         "addButton": "Add",
         "customFieldsList": "List of custom fields:"
+    },
+    "CollectionPage": {
+        "title": "Collection",
+        "tags": "Tags: ",
+        "noTags": "No tags have been added",
+        "noItems": "No items have been added",
+        "saveBtn": "Save",
+        "createItem": "Create"
     }
 }

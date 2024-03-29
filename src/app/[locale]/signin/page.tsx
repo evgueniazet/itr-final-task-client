@@ -1,12 +1,16 @@
 'use client';
 
 import { useFormik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { TextField, Button, Grid, Typography, Box, useTheme } from '@mui/material';
 import { signInValidationSchema } from './utils/signInValidationSchema';
 import { useThemeMode } from 'hooks/useThemeMode';
 
 const Login = () => {
     const theme = useTheme();
+    const { themeMode } = useThemeMode();
+    const t = useTranslations('LoginPage');
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -17,7 +21,6 @@ const Login = () => {
             console.log(values);
         },
     });
-    const { themeMode } = useThemeMode();
 
     return (
         <Box
@@ -39,7 +42,7 @@ const Login = () => {
                             : theme.palette.secondary.main,
                     }}
                 >
-                    Login
+                    {t('login')}
                 </Typography>
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
@@ -48,7 +51,7 @@ const Login = () => {
                                 fullWidth
                                 id="email"
                                 name="email"
-                                label="Email"
+                                label={t('email')}
                                 value={formik.values.email}
                                 onChange={formik.handleChange}
                                 error={formik.touched.email && Boolean(formik.errors.email)}
@@ -60,7 +63,7 @@ const Login = () => {
                                 fullWidth
                                 id="password"
                                 name="password"
-                                label="Password"
+                                label={t('password')}
                                 type="password"
                                 value={formik.values.password}
                                 onChange={formik.handleChange}
@@ -70,7 +73,7 @@ const Login = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <Button type="submit" variant="contained" color="primary" fullWidth>
-                                Login
+                                {t('login')}
                             </Button>
                         </Grid>
                     </Grid>

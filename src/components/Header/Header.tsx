@@ -11,18 +11,21 @@ import {
 } from '@mui/material';
 import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { ELanguages } from 'enums/ELanguages';
 import { getLanguageFromUrl } from 'utils/getLanguageFromUrl';
 import { useThemeMode } from 'hooks/useThemeMode';
 
 export const Header = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const theme = useTheme();
     const router = useRouter();
+    const theme = useTheme();
+    const { themeMode, setThemeMode } = useThemeMode();
     const pathname = usePathname();
     const query = useSearchParams();
-    const { themeMode, setThemeMode } = useThemeMode();
     const language = getLanguageFromUrl(pathname);
+    const t = useTranslations('Header');
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleLogin = () => {
         router.push(`/${language}/signin`);
@@ -70,7 +73,7 @@ export const Header = () => {
             <Toolbar>
                 {isLoggedIn ? (
                     <Button color="inherit" onClick={handleLogout}>
-                        Logout
+                        {t('logout')}
                     </Button>
                 ) : (
                     <>
@@ -82,7 +85,7 @@ export const Header = () => {
                             }}
                             onClick={handleLogin}
                         >
-                            Login
+                            {t('login')}
                         </Button>
                         <Button
                             sx={{
@@ -93,7 +96,7 @@ export const Header = () => {
                             }}
                             onClick={handleSignUp}
                         >
-                            Sign Up
+                            {t('register')}
                         </Button>
                     </>
                 )}
@@ -105,7 +108,7 @@ export const Header = () => {
                     }}
                     onClick={handleUsers}
                 >
-                    Users
+                    {t('users')}
                 </Button>
                 <IconButton
                     sx={{

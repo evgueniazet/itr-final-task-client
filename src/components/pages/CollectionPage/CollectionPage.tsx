@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Box, Button, TextField } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { Add, Save } from '@mui/icons-material';
 import { useItemsCollection } from './CollectionPage.utils';
 import { ItemsList } from 'components/ItemsList/ItemsList';
@@ -10,6 +11,7 @@ import { TItemInCollection } from 'types/TItemInCollection';
 import { useCollection } from './CollectionPage.utils';
 
 export const CollectionPage = () => {
+    const t = useTranslations('CollectionPage');
     const searchParams = useSearchParams();
     const collectionId = searchParams.get('collectionId');
 
@@ -38,7 +40,7 @@ export const CollectionPage = () => {
 
     return (
         <>
-            <h1>Collection Page</h1>
+            <h1> {t('title')}</h1>
             <ItemsList
                 items={items}
                 onDelete={(itemId: number) => deleteItemInCollection(itemId)}
@@ -78,7 +80,7 @@ export const CollectionPage = () => {
                         startIcon={<Save />}
                         onClick={handleSaveNewItem}
                     >
-                        Save
+                        {t('saveBtn')}
                     </Button>
                 </Box>
             ) : (
@@ -88,7 +90,7 @@ export const CollectionPage = () => {
                         startIcon={<Add />}
                         onClick={() => setIsCreatingNewItem(true)}
                     >
-                        Create item
+                        {t('createItem')}
                     </Button>
                 </Box>
             )}

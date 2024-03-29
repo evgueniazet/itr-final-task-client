@@ -148,13 +148,13 @@ export const UserPage = () => {
                                                     }}
                                                     variant="subtitle1"
                                                 >
-                                                    Collection name: {collection.title}
+                                                    {t('collectionName')} {collection.title}
                                                 </Typography>
                                                 <Typography variant="subtitle1">
-                                                    Collection category:
+                                                    {t('collectionCategory')}
                                                     {collection.category}
                                                 </Typography>
-                                                Collection description
+                                                {t('collectionDescription')}
                                                 <MarkdownEditor
                                                     markdownText={collection.description}
                                                 ></MarkdownEditor>

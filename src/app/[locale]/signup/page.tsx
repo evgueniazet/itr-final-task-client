@@ -4,6 +4,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { TextField, Button, Grid, Typography, Box, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { signUpValidationSchema } from './utils/signUpValidationSchema';
 import { useThemeMode } from 'hooks/useThemeMode';
 import { api } from 'src/api/axiosSettings';
@@ -14,8 +15,11 @@ import { getLanguageFromUrl } from 'utils/getLanguageFromUrl';
 const SignUp = () => {
     const router = useRouter();
     const pathname = usePathname();
-    const language = getLanguageFromUrl(pathname);
     const theme = useTheme();
+    const { themeMode } = useThemeMode();
+    const t = useTranslations('RegisterPage');
+    const language = getLanguageFromUrl(pathname);
+
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -39,7 +43,6 @@ const SignUp = () => {
                 });
         },
     });
-    const { themeMode } = useThemeMode();
 
     return (
         <Box
@@ -61,7 +64,7 @@ const SignUp = () => {
                             : theme.palette.secondary.main,
                     }}
                 >
-                    Registration
+                    {t('register')}
                 </Typography>
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
@@ -70,7 +73,7 @@ const SignUp = () => {
                                 fullWidth
                                 id="name"
                                 name="name"
-                                label="Name"
+                                label={t('name')}
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
                                 error={formik.touched.name && Boolean(formik.errors.name)}
@@ -82,7 +85,7 @@ const SignUp = () => {
                                 fullWidth
                                 id="surname"
                                 name="surname"
-                                label="Surname"
+                                label={t('surname')}
                                 value={formik.values.surname}
                                 onChange={formik.handleChange}
                                 error={formik.touched.surname && Boolean(formik.errors.surname)}
@@ -94,7 +97,7 @@ const SignUp = () => {
                                 fullWidth
                                 id="email"
                                 name="email"
-                                label="Email"
+                                label={t('email')}
                                 value={formik.values.email}
                                 onChange={formik.handleChange}
                                 error={formik.touched.email && Boolean(formik.errors.email)}
@@ -106,7 +109,7 @@ const SignUp = () => {
                                 fullWidth
                                 id="password"
                                 name="password"
-                                label="Password"
+                                label={t('password')}
                                 type="password"
                                 value={formik.values.password}
                                 onChange={formik.handleChange}
@@ -119,7 +122,7 @@ const SignUp = () => {
                                 fullWidth
                                 id="confirmPassword"
                                 name="confirmPassword"
-                                label="Confirm Password"
+                                label={t('confirmPassword')}
                                 type="password"
                                 value={formik.values.confirmPassword}
                                 onChange={formik.handleChange}
@@ -134,7 +137,7 @@ const SignUp = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <Button type="submit" variant="contained" color="primary" fullWidth>
-                                Sign Up
+                                {t('register')}
                             </Button>
                         </Grid>
                     </Grid>

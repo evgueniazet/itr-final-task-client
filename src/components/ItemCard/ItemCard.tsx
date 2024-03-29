@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import { Card, CardContent, Typography, IconButton } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { TItemCardProps } from './ItemCard.types';
@@ -10,6 +11,8 @@ export const ItemCard = ({
     onDelete,
     updateItemInCollection,
 }: TItemCardProps) => {
+    const t = useTranslations('CollectionPage');
+
     return (
         <Card>
             <CardContent>
@@ -21,11 +24,11 @@ export const ItemCard = ({
                 </Typography>
                 {item.tags && item.tags.length > 0 ? (
                     <Typography variant="body2" color="text.secondary">
-                        Tags: {item.tags.join(', ')}
+                        {t('tags')} {item.tags.join(', ')}
                     </Typography>
                 ) : (
                     <Typography variant="body2" color="text.secondary">
-                        No tags
+                       {t('noTags')}
                     </Typography>
                 )}
                 <CustomFields

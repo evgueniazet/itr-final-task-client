@@ -24,7 +24,7 @@ export const CustomFieldEditor = ({
     existingCustomFields,
     setCustomFields,
 }: TCustomFieldEditorProps) => {
-    const t = useTranslations('customFieldEditor');
+    const t = useTranslations('CustomFieldEditor');
     const [newField, setNewField] = useState<{ type: string; name: string }>({
         type: '',
         name: '',

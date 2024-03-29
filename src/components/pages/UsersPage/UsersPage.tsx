@@ -8,8 +8,6 @@ import { TUser } from 'types/TUser';
 import { useUsers } from './UsersPage.utils';
 import { getLanguageFromUrl } from 'utils/getLanguageFromUrl';
 
-const COLUMN_TITLES = ['ID', 'Name', 'Surname', 'Email', 'Role', 'Block'];
-
 export const UsersPage = () => {
     const theme = useTheme();
     const t = useTranslations('UsersPage');
@@ -34,19 +32,62 @@ export const UsersPage = () => {
                 {t('title')}
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-                {COLUMN_TITLES.map((title, index) => (
-                    <Typography
-                        key={index}
-                        variant={index === 0 ? 'h6' : 'body1'}
-                        sx={{
-                            flex: 1,
-                            color: theme.palette.text.primary,
-                        }}
-                    >
-                        {title}
-                    </Typography>
-                ))}
+                <Typography
+                    variant="h6"
+                    sx={{
+                        flex: 1,
+                        color: theme.palette.text.primary,
+                    }}
+                >
+                    {t('id')}
+                </Typography>
+                <Typography
+                    variant="body1"
+                    sx={{
+                        flex: 1,
+                        color: theme.palette.text.primary,
+                    }}
+                >
+                    {t('name')}
+                </Typography>
+                <Typography
+                    variant="body1"
+                    sx={{
+                        flex: 1,
+                        color: theme.palette.text.primary,
+                    }}
+                >
+                    {t('surname')}
+                </Typography>
+                <Typography
+                    variant="body1"
+                    sx={{
+                        flex: 1,
+                        color: theme.palette.text.primary,
+                    }}
+                >
+                    {t('email')}
+                </Typography>
+                <Typography
+                    variant="body1"
+                    sx={{
+                        flex: 1,
+                        color: theme.palette.text.primary,
+                    }}
+                >
+                    {t('role')}
+                </Typography>
+                <Typography
+                    variant="body1"
+                    sx={{
+                        flex: 1,
+                        color: theme.palette.text.primary,
+                    }}
+                >
+                    {t('blockStatus')}
+                </Typography>
             </Box>
+
             {users?.map((user: TUser) => (
                 <UserRow
                     key={user.id}

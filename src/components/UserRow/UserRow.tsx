@@ -1,5 +1,6 @@
 import { Box, Button, Select, MenuItem, Typography, useTheme } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslations } from 'next-intl';
 import { TUserRowProps } from './UserRow.types';
 import { ERoles, EUserBlockStatuses } from 'enums/index';
 
@@ -11,6 +12,7 @@ export const UserRow = ({
     onClickUser,
 }: TUserRowProps) => {
     const theme = useTheme();
+    const t = useTranslations('UsersPage');
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
@@ -40,8 +42,8 @@ export const UserRow = ({
                 onChange={(e) => onRoleChange(user, e.target.value as ERoles)}
                 sx={{ flex: 1, mr: 1 }}
             >
-                <MenuItem value={ERoles.ADMIN}>Admin</MenuItem>
-                <MenuItem value={ERoles.USER}>User</MenuItem>
+                <MenuItem value={ERoles.ADMIN}> {t('admin')}</MenuItem>
+                <MenuItem value={ERoles.USER}>{t('user')}</MenuItem>
             </Select>
             <Button onClick={() => onUserBlock(user)} sx={{ flex: 1 }}>
                 {user.isBlocked ? EUserBlockStatuses.UNBLOCK : EUserBlockStatuses.BLOCK}

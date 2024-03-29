@@ -1,6 +1,33 @@
 {
+    "Header": {
+        "logout": "Выйти",
+        "login": "Авторизация",
+        "register": "Регистрация",
+        "users": "Пользователи"
+    },
+    "LoginPage": {
+        "login": "Войти в личный аккаунт",
+        "email": "Почта",
+        "password": "Пароль"
+    },
+    "RegisterPage": {
+        "register": "Регистрация",
+        "name": "Имя",
+        "surname": "Фамилия",
+        "email": "Почта",
+        "password": "Пароль",
+        "confirmPassword": "Подтвердить пароль"
+    },
     "UsersPage": {
-        "title": "Пользователи"
+        "title": "Пользователи",
+        "admin": "Администратор",
+        "user": "Пользователь",
+        "id": "ID",
+        "name": "Имя",
+        "surname": "Фамилия",
+        "email": "Почта",
+        "role": "Роль",
+        "blockStatus": "Статус"
     },
     "UserPage": {
         "title": "Страница пользователя",
@@ -12,7 +39,10 @@
         "email": "Почта: ",
         "role": "Роль: ",
         "createCollectionButton": "Создать новую коллекцию",
-        "noCollectionsMessage": "Пока не создано ни одной коллекции :("
+        "noCollectionsMessage": "Пока не создано ни одной коллекции :(",
+        "collectionName": "Название коллекции: ",
+        "collectionCategory": "Категория коллекции: ",
+        "collectionDescription": "Описание коллекции: "
     },
     "ModalWindowCollection": {
         "saveCollectionButton": "Сохранить коллекцию",
@@ -20,7 +50,7 @@
         "collectionDescription": "Описание коллекции",
         "collectionCategory": "Категория коллекции"
     },
-    "customFieldEditor": {
+    "CustomFieldEditor": {
         "addCustomField": "Добавить кастомное поле",
         "fieldTitle": "Название",
         "dateTimeField": "Дата/Время",
@@ -30,5 +60,13 @@
         "textField": "Текстовое",
         "addButton": "Добавить",
         "customFieldsList": "Список кастомных полей: "
+    },
+    "CollectionPage": {
+        "title": "Коллекция",
+        "tags": "Тэги: ",
+        "noTags": "Тэги не были добавлены",
+        "noItems": "Элементы коллекции не были добавлены",
+        "saveBtn": "Сохранить",
+        "createItem": "Создать"
     }
 }
